@@ -66,6 +66,7 @@ services:
           - INSTALL_TOKENIZER=${PHP_FPM_INSTALL_TOKENIZER}
           - INSTALL_INTL=${PHP_FPM_INSTALL_INTL}
           - INSTALL_GHOSTSCRIPT=${PHP_FPM_INSTALL_GHOSTSCRIPT}
+          - INSTALL_GIT=${PHP_FPM_INSTALL_GIT}
         dockerfile: "Dockerfile-${PHP_VERSION}"
       volumes_from:
         - applications
@@ -178,6 +179,57 @@ services:
         - ${DATA_SAVE_PATH}/mysql:/var/lib/mysql
       ports:
         - "${MYSQL_PORT}:3306"
+      networks:
+        - backend
+
+### MySQL Container #########################################
+
+    mysqlx:
+      build:
+        context: ./mysql
+      environment:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      volumes:
+        - ${DATA_SAVE_PATH}/mysqlx:/var/lib/mysql
+      ports:
+        - "${MYSQLX_PORT}:3306"
+      networks:
+        - backend
+
+### MySQL Container #########################################
+
+    mysql3:
+      build:
+        context: ./mysql
+      environment:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      volumes:
+        - ${DATA_SAVE_PATH}/mysql3:/var/lib/mysql
+      ports:
+        - "${MYSQL3_PORT}:3306"
+      networks:
+        - backend
+
+### MySQL Container #########################################
+
+    mysql4:
+      build:
+        context: ./mysql
+      environment:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      volumes:
+        - ${DATA_SAVE_PATH}/mysql4:/var/lib/mysql
+      ports:
+        - "${MYSQL4_PORT}:3306"
       networks:
         - backend
 
@@ -562,6 +614,12 @@ networks:
 
 volumes:
   mysql:
+    driver: "local"
+  mysqlx:
+    driver: "local"
+  mysql3:
+    driver: "local"
+  mysql4:
     driver: "local"
   percona:
     driver: "local"

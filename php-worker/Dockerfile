@@ -7,7 +7,7 @@
 #    https://hub.docker.com/r/nielsvdoorn/laravel-supervisor/
 #
 
-FROM nielsvdoorn/laravel-supervisor
+FROM dock
 
 MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
 

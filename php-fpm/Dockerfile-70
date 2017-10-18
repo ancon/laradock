@@ -296,6 +296,26 @@ RUN if [ ${INSTALL_GHOSTSCRIPT} = true ]; then \
     ghostscript \
 ;fi
 
+#####################################
+# GIT:
+#####################################
+
+ARG INSTALL_GIT=false
+RUN if [ ${INSTALL_GIT} = true ]; then \
+    # Install the ghostscript extension
+    # for PDF editing
+    apt-get -y update \
+    && apt-get install -y \
+    git \
+    && usermod -s /bin/bash www-data \
+;fi
+
+###################################
+# git，openssh，修改权限，配置把ssh添加到工作台。
+##################################
+
+
+
 #
 #--------------------------------------------------------------------------
 # Final Touch
