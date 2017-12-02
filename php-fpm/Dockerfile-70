@@ -38,6 +38,8 @@ MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
 #   - INSTALL_ZIP_ARCHIVE=true
 #
 
+ADD ./sources.list /etc/apt/sources.list
+
 #####################################
 # SOAP:
 #####################################
@@ -308,11 +310,9 @@ RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
 #####################################
 # GIT:
 #####################################
-
+USER root
 ARG INSTALL_GIT=false
 RUN if [ ${INSTALL_GIT} = true ]; then \
-    # Install the ghostscript extension
-    # for PDF editing
     apt-get -y update \
     && apt-get install -y \
     git \
