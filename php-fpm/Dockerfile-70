@@ -351,6 +351,11 @@ RUN if [ ${INSTALL_GIT} = true ]; then \
 #--------------------------------------------------------------------------
 #
 
+ARG TZ=UTC
+ENV TZ ${TZ}
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+
 ADD ./laravel.ini /usr/local/etc/php/conf.d/
 ADD ./xlaravel.pool.conf /usr/local/etc/php-fpm.d/
 

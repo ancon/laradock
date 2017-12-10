@@ -90,6 +90,7 @@ services:
           - INSTALL_IMAGE_OPTIMIZERS=${PHP_FPM_INSTALL_IMAGE_OPTIMIZERS}
           - INSTALL_IMAGEMAGICK=${PHP_FPM_INSTALL_IMAGEMAGICK}
           - INSTALL_GIT=${PHP_FPM_INSTALL_GIT}
+          - TZ=${WORKSPACE_TIMEZONE}
         dockerfile: "Dockerfile-${PHP_VERSION}"
       volumes_from:
         - applications
@@ -131,6 +132,7 @@ services:
         args:
           - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
           - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
+          - TZ=${WORKSPACE_TIMEZONE}
       volumes_from:
         - applications
       volumes:
@@ -239,6 +241,7 @@ services:
         - MYSQL_USER=${MYSQL_USER}
         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - TZ=${WORKSPACE_TIMEZONE}
       volumes:
         - ${DATA_SAVE_PATH}/mysqlx:/var/lib/mysql
       ports:
@@ -256,6 +259,7 @@ services:
         - MYSQL_USER=${MYSQL_USER}
         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - TZ=${WORKSPACE_TIMEZONE}
       volumes:
         - ${DATA_SAVE_PATH}/mysql3:/var/lib/mysql
       ports:
@@ -273,6 +277,7 @@ services:
         - MYSQL_USER=${MYSQL_USER}
         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - TZ=${WORKSPACE_TIMEZONE}
       volumes:
         - ${DATA_SAVE_PATH}/mysql4:/var/lib/mysql
       ports:
