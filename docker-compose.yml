@@ -107,6 +107,43 @@ services:
       networks:
         - backend
 
+### Node ####
+
+    node:
+      build:
+        context: ./node
+        args:
+          - TZ=${WORKSPACE_TIMEZONE}
+      volumes:
+        - node:/home/node/app
+      working_dir: /home/node/app
+      ports:
+        - "${NODE_HOST_HTTP_PORT}:1415"
+      depends_on:
+        - workspace
+      networks:
+        - frontend
+        - backend
+
+### JAVA ####
+
+    java:
+      build:
+        context: ./java
+        args:
+          - TZ=${WORKSPACE_TIMEZONE}
+      volumes:
+        - java:/root
+      volumes_from:
+        - applications
+      ports:
+        - "${JAVA_HOST_HTTP_PORT}:8808"
+      depends_on:
+        - workspace
+      networks:
+        - frontend
+        - backend
+
 ### PHP Worker Container #####################################
 
     php-worker:
@@ -553,8 +590,9 @@ services:
     elasticsearch:
       build: ./elasticsearch
       volumes:
-        - elasticsearch-data:/usr/share/elasticsearch/data
-        - elasticsearch-plugins:/usr/share/elasticsearch/plugins
+        - ${DATA_SAVE_PATH}/elasticsearch-data:/usr/share/elasticsearch/data
+        - ${DATA_SAVE_PATH}/elasticsearch-logs:/usr/share/elasticsearch/logs
+        - ${DATA_SAVE_PATH}/elasticsearch-config:/usr/share/elasticsearch/config
       environment:
         - cluster.name=laradock-cluster
         - bootstrap.memory_lock=true
@@ -785,5 +823,11 @@ volumes:
     driver: "local"
   elasticsearch-data:
     driver: "local"
-  elasticsearch-plugins:
+  elasticsearch-logs:
+    driver: "local"
+  elasticsearch-config:
+    driver: "local"
+  node:
+    driver: "local"
+  java:
     driver: "local"
